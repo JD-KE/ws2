@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.time.LocalDate;
 
 public class BankAccount {
     private String holderName;
@@ -8,7 +9,7 @@ public class BankAccount {
     private float accountBalance;
     private List<String> transactions = new ArrayList<>();
     private boolean isClosed = false;
-    private String creationDate = "25.10.2023";
+    private String creationDate;
     private String closeDate;
 
     public BankAccount(String name, float initBalance) {
@@ -16,14 +17,19 @@ public class BankAccount {
         accountBalance = initBalance;
         Random random = new Random();
         accountNumber = String.valueOf(random.nextInt(1000));
+        creationDate = LocalDate.now().toString();
     }
 
     public BankAccount(String name) {
         this(name, (float) 0.0);
     }
 
-    public float getBalance () {
+    public float getAccountBalance () {
         return accountBalance;
+    }
+
+    public void setAccountBalance(float amount) {
+        accountBalance = amount;
     }
 
     public String getName () {
@@ -37,8 +43,13 @@ public class BankAccount {
     public List<String> getTransactions () {
         return transactions;
     }
+
     public boolean getClosed() {
         return isClosed;
+    }
+
+    public void setClosed(boolean closed) {
+        isClosed = closed;
     }
 
     public String getCreationDate () {
@@ -78,8 +89,12 @@ public class BankAccount {
     }
 
     public void close() {
-        isClosed = true;
-        closeDate = "25.10.2023";
-        System.out.println("Account closed");
+        if (isClosed) {
+            System.out.println("Account is already closed.");
+        } else {
+            isClosed = true;
+            closeDate = LocalDate.now().toString();
+            System.out.println("Account closed");
+        }
     }
 }
